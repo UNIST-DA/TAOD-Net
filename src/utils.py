@@ -142,10 +142,17 @@ def get_img_cropped(data_path, pid, landmarks, mode=0, bound=0.2):
     d_x = abs(coords[:,1].max()-coords[:,1].min())
     d_y = abs(coords[:,0].max()-coords[:,0].min())
     
-    c_x_1 = max(round(coords[:,1].min()-bound*d_x), 0)
-    c_x_2 = max(round(coords[:,1].max()+bound*d_x), 0)
-    c_y_1 = max(round(coords[:,0].min()-bound*d_y), 0)
-    c_y_2 = max(round(coords[:,0].max()+bound*d_y), 0)
+    # bounding box
+    if mode == 0 or mode == 7: 
+        c_x_1 = max(round(coords[:,1].min()-1.1*d_x), 0)
+        c_x_2 = max(round(coords[:,1].max()+1.2*d_x), 0)
+        c_y_1 = max(round(coords[:,0].min()-0.5*d_y), 0)
+        c_y_2 = max(round(coords[:,0].max()+0.3*d_y), 0)
+    else: 
+        c_x_1 = max(round(coords[:,1].min()-bound*d_x), 0)
+        c_x_2 = max(round(coords[:,1].max()+bound*d_x), 0)
+        c_y_1 = max(round(coords[:,0].min()-bound*d_y), 0)
+        c_y_2 = max(round(coords[:,0].max()+bound*d_y), 0)
     
     img_c = img[c_x_1:c_x_2, c_y_1:c_y_2]
     
